@@ -16,8 +16,11 @@ def create_database():
     c.execute('INSERT INTO MTS (id, Value, Date) values (3, 6, ?)',  ('2017-06-06',))
     base.commit()
 
+
 def result():
     return c.execute('select rowid, ID, max(Date), max(Value) from MTS GROUP BY id').fetchall()
 #a = c.execute('select rowid FROM MTS WHERE Date=(SELECT MAX(Date) FROM MTS) AND Value = (SELECT MAX(Value) FROM MTS)').fetchall()
 
 
+create_database()
+pritn(result())
