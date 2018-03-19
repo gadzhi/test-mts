@@ -5,5 +5,5 @@ import sys
 
 # input comes from STDIN (standard input)
 csv_data = csv.reader('temp.csv')
-
-print csv_data
+for row in csv_data:
+      print row
