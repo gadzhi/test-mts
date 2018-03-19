@@ -8,7 +8,7 @@ c = base.cursor()
 
 def create_database():
 
-    c.execute('create table if not exists MTS (ID INTEGER, Value INTEGER, Date DATE, )')
+    c.execute('create table if not exists MTS (ID INTEGER, Value INTEGER, Date DATE )')
     c.execute('INSERT INTO MTS (ID, Value, Date) values (1,5,?)', ('2017-01-01',))
     c.execute('INSERT INTO MTS (id, Value, Date) values (1, 6,?)', ('2017-01-01',))
     c.execute('INSERT INTO MTS (id, Value, Date) values (2, 2,?)', ('2017-01-02',))
@@ -23,4 +23,4 @@ def result():
 
 
 create_database()
-pritn(result())
+print(result())

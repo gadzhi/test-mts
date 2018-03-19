@@ -64,11 +64,15 @@ def sentiments():
                 c.execute('UPDATE MTS SET tweet_sentiment = tweet_sentiment + (?) where rowid = ?; ', (int(value), rowid))
                 base.commit()
             else:
-                print('Нет слова')
+                pass
         rowid += 1
 
+
 def user():
-    c.execute('SELECT name FROM MTS WHERE tweet_sentiment = (select MAX(tweet_sentiment) from MTS)').fetchall()
+     lucky = c.execute('SELECT name FROM MTS WHERE tweet_sentiment = (select MAX(tweet_sentiment) from MTS)').fetchone()
+     unlucky = c.execute('SELECT name FROM MTS WHERE tweet_sentiment = (select MIN(tweet_sentiment) from MTS)').fetchone()
+
+     return ("Самая счастливый юзер: " + str(lucky[0]) + "\nСамая несчастливая: " + str(unlucky[0]))
 
 
 def country():
@@ -83,13 +87,15 @@ def country():
     lucky = c.execute('SELECT lang, SUM(tweet_sentiment) AS result FROM MTS GROUP BY lang  '
                      'HAVING result >= {value};'.format(value=lucky_v)).fetchall()
     unlucky = c.execute('SELECT lang, SUM(tweet_sentiment) AS result FROM MTS GROUP BY lang  '
-                     'HAVING result <- {value};'.format(value=unlucky_v)).fetchall()
+                     'HAVING result <= {value};'.format(value=unlucky_v)).fetchall()
 
-    return ("Самая счастливая страна: " + str(lucky) + "\nСамая несчастливая: ")
-#write_data(data)
-#sentiments()
+    return ("Самая счастливая страна: " + str(lucky) + "\nСамая несчастливая: " + str(unlucky))
 
-print(lucky_country())
+print(write_data(data))
+print(sentiments())
+
+print(user())
+print(country())
 
 
 
